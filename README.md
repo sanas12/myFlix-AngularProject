@@ -1,1 +1,1 @@
-# myFlix-Angular-clent
+# myFlix-Angular-client
