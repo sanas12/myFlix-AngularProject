@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FetchApiDataService {
   // Replace 'your_api_url' with the actual URL of your API
-  apiUrl = 'https://your_api_url_here';
+  apiUrl = 'https://myflix-app-s99e.onrender.com';
 
   constructor(private http: HttpClient) {}
 
   // User registration
-  public userRegistration(userDetails: any) {
+  public userRegistration(userDetails: any): Observable<any> {
     return this.http
       .post(`${this.apiUrl}/users`, userDetails)
       .pipe(catchError(this.handleError));

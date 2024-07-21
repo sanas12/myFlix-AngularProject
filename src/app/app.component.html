@@ -8,5 +8,18 @@
   >
     Sign Up
   </button>
-  <button mat-raised-button color="primary">Login</button>
+
+  <!-- Adding the click event on the signup button -->
+
+  <button
+    mat-raised-button
+    (click)="openUserLoginDialog()"
+    style="margin-left: 10px"
+    color="primary"
+  >
+    Login
+  </button>
+  <button mat-raised-button color="primary" (click)="openMoviesDialog()">
+    All Movies
+  </button>
 </div>
