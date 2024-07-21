@@ -10,10 +10,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
-import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 
 @NgModule({
-  declarations: [AppComponent, UserRegistrationFormComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -25,7 +24,6 @@ import { UserRegistrationFormComponent } from './user-registration-form/user-reg
     MatButtonModule,
     MatSnackBarModule,
     MatDialogModule,
-    UserRegistrationFormComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
