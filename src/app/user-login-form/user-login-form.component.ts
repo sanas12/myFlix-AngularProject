@@ -27,7 +27,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
   ],
 })
 export class UserLoginFormComponent implements OnInit {
-  @Input() userData = { username: '', password: '' };
+  @Input() userData = { Username: '', Password: '' };
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -46,7 +46,7 @@ export class UserLoginFormComponent implements OnInit {
         console.log('Login response:', res); // Logging the response
 
         this.snackBar.open(
-          `Login success, Welcome ${res.user.username}`,
+          `Login success, Welcome ${res.user.Username}`,
           'OK',
           {
             duration: 2000,
@@ -55,7 +55,7 @@ export class UserLoginFormComponent implements OnInit {
         let user = {
           ...res.user,
           id: res.user._id,
-          password: this.userData.password,
+          Password: this.userData.Password,
           token: res.token,
         };
         localStorage.setItem('user', JSON.stringify(user));
