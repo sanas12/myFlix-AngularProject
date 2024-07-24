@@ -1,19 +1,15 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialogModule } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { FetchApiDataService } from '../fetch-api-data.service';
 
 @Component({
   selector: 'app-movie-card',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatDialogModule],
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.scss'],
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit {
   movies: any[] = [];
-  constructor(public fetchApiData: FetchApiDataService) {}
+
+  constructor(private fetchApiData: FetchApiDataService) {}
 
   ngOnInit(): void {
     this.getMovies();
@@ -23,7 +19,6 @@ export class MovieCardComponent {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
       console.log(this.movies);
-      return this.movies;
     });
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Observable } from 'rxjs';
 
@@ -13,6 +13,11 @@ export class FetchApiDataService {
 
   constructor(private http: HttpClient) {}
 
+  // Get token from local storage
+  private getToken(): string {
+    return localStorage.getItem('token') || '';
+  }
+
   // User registration
   public userRegistration(userDetails: any): Observable<any> {
     return this.http
@@ -20,17 +25,21 @@ export class FetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
-  // User login
   public userLogin(userDetails: any) {
-    return this.http
-      .post(`${this.apiUrl}/login`, userDetails)
-      .pipe(catchError(this.handleError));
+    return this.http.post(`${this.apiUrl}/login`, userDetails).pipe(
+      tap((response: any) => {
+        localStorage.setItem('token', response.token);
+      }),
+      catchError(this.handleError)
+    );
   }
 
   // Get all movies
-  public getAllMovies() {
+  public getAllMovies(): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http
-      .get(`${this.apiUrl}/movies`)
+      .get(`${this.apiUrl}/movies`, { headers })
       .pipe(catchError(this.handleError));
   }
 
