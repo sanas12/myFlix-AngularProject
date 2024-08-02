@@ -1,3 +1,7 @@
+/**
+ * @fileoverview This file contains the main module for the application.
+ */
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,27 +12,41 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-import { RouterModule, Routes } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 
 import { AppComponent } from './app.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
+import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
 
-const appRoutes: Routes = [
-  { path: 'welcome', component: WelcomePageComponent },
-  { path: 'movies', component: MovieCardComponent },
-  { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
-];
+import { AppRoutingModule } from './app-routing.module';
 
+/**
+ * The main application module.
+ * @module AppModule
+ */
 @NgModule({
   declarations: [
+    /**
+     * The main app component.
+     */
     AppComponent,
+    /**
+     * The welcome page component.
+     */
     WelcomePageComponent,
+    /**
+     * The user registration form component.
+     */
     UserRegistrationFormComponent,
+    /**
+     * The user login form component.
+     */
     UserLoginFormComponent,
+    /**
+     * The movie card component.
+     */
     MovieCardComponent,
   ],
   imports: [
@@ -42,8 +60,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatSnackBarModule,
     MatDialogModule,
-    RouterModule.forRoot(appRoutes),
     MatIconModule,
+    AppRoutingModule, // Make sure AppRoutingModule is imported last
   ],
   providers: [],
   bootstrap: [AppComponent],

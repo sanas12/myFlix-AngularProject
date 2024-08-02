@@ -1,13 +1,15 @@
-// src/app/app-routing.module.ts
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { MovieCardComponent } from './movie-card/movie-card.component';
 
+/**
+ * Defines the routes for the application.
+ */
 const routes: Routes = [
-  // Define your routes here
-  // Example:
-  // { path: '', component: HomeComponent },
-  // { path: 'movies', component: MoviesComponent },
+  { path: 'welcome', component: WelcomePageComponent },
+  { path: 'movies', component: MovieCardComponent },
+  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
 ];
 
 @NgModule({

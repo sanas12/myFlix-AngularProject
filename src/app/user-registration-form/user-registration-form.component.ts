@@ -9,6 +9,9 @@ import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FetchApiDataService } from '../fetch-api-data.service';
 
+/**
+ * UserRegistrationFormComponent provides a form for users to register an account.
+ */
 @Component({
   selector: 'app-user-registration-form',
   standalone: true,
@@ -28,19 +31,30 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 export class UserRegistrationFormComponent {
   userData = { Username: '', Password: '', Email: '', Birthday: '' };
 
+  /**
+   * @param fetchApiData Service to handle API requests.
+   * @param dialogRef Reference to the currently opened dialog.
+   * @param snackBar Snackbar service for displaying messages.
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
     public snackBar: MatSnackBar
   ) {}
 
+  /**
+   * Called after the component's view has been initialized.
+   */
   ngOnInit(): void {}
 
+  /**
+   * Registers the user by sending their data to the backend.
+   */
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe(
       (result: any) => {
         const message = result.message || 'Registration successful!';
-        this.dialogRef.close(); // This will close the modal on success!
+        this.dialogRef.close(); // Close the modal on success!
         this.snackBar.open(message, 'OK', {
           duration: 2000,
         });
