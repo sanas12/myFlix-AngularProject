@@ -12,14 +12,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
-
+import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing.module';
 
 /**
@@ -52,6 +52,7 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatCardModule,

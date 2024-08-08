@@ -10,6 +10,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { FetchApiDataService } from '../fetch-api-data.service';
 
+/**
+ * UserLoginFormComponent provides a user login form and handles the login process.
+ */
 @Component({
   selector: 'app-user-login-form',
   standalone: true,
@@ -29,6 +32,13 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 export class UserLoginFormComponent implements OnInit {
   @Input() userData = { Username: '', Password: '' };
 
+  /**
+   * Creates an instance of UserLoginFormComponent.
+   * @param fetchApiData - The service used to communicate with the API for user login.
+   * @param dialogRef - Reference to the dialog opened.
+   * @param snackBar - Service to show notifications.
+   * @param router - Router service to navigate between routes.
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
@@ -36,8 +46,16 @@ export class UserLoginFormComponent implements OnInit {
     private router: Router
   ) {}
 
+  /**
+   * Angular lifecycle hook that is called after the component has initialized.
+   */
   ngOnInit(): void {}
 
+  /**
+   * Logs in the user using the provided credentials.
+   * On successful login, stores the user data in localStorage and navigates to the 'movies' route.
+   * Displays appropriate notifications based on the success or failure of the login attempt.
+   */
   logInUser(): void {
     console.log('Login attempt with userData:', this.userData); // Logging the payload
 
