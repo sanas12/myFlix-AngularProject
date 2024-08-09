@@ -112,10 +112,15 @@ export class FetchApiDataService {
   public editUser(userDetails: any): Observable<any> {
     const token = this.getToken();
     return this.http
-      .put(`${this.apiUrl}/users/${userDetails}`, {
+      .put(`${this.apiUrl}/users/${userDetails.id}`, userDetails, {
         headers: new HttpHeaders().set('Authorization', `Bearer ${token}`),
       })
-      .pipe(catchError(this.handleError));
+      .pipe(tap(this.extractResponseData), catchError(this.handleError));
+  }
+  extractResponseData(
+    extractResponseData: any
+  ): import('rxjs').OperatorFunction<Object, Object> {
+    throw new Error('Method not implemented.');
   }
 
   // Delete user
