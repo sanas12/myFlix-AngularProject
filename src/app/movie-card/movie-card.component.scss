@@ -1,0 +1,25 @@
+.image-cont {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 300px;
+}
+mat-icon.favorite {
+  color: red;
+}
+
+mat-icon.favorite_border {
+  color: gray;
+}
+/* Styling for the navigation buttons */
+nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+nav button {
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(86, 22, 169);
+}

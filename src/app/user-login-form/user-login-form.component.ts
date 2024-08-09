@@ -59,32 +59,34 @@ export class UserLoginFormComponent implements OnInit {
   logInUser(): void {
     console.log('Login attempt with userData:', this.userData); // Logging the payload
 
-    this.fetchApiData.userLogin(this.userData).subscribe(
-      (res: any) => {
-        console.log('Login response:', res); // Logging the response
+    this.fetchApiData
+      .userLogin(this.userData.Username, this.userData.Password)
+      .subscribe(
+        (res: any) => {
+          console.log('Login response:', res); // Logging the response
 
-        this.snackBar.open(
-          `Login success, Welcome ${res.user.Username}`,
-          'OK',
-          {
+          this.snackBar.open(
+            `Login success, Welcome ${res.user.Username}`,
+            'OK',
+            {
+              duration: 2000,
+            }
+          );
+          let user = {
+            ...res.user,
+            id: res.user._id,
+            Password: this.userData.Password,
+            token: res.token,
+          };
+          localStorage.setItem('user', JSON.stringify(user));
+          this.router.navigate(['movies']);
+        },
+        (error) => {
+          console.error('Login error: ', error);
+          this.snackBar.open('Login failed: ' + error.message, 'OK', {
             duration: 2000,
-          }
-        );
-        let user = {
-          ...res.user,
-          id: res.user._id,
-          Password: this.userData.Password,
-          token: res.token,
-        };
-        localStorage.setItem('user', JSON.stringify(user));
-        this.router.navigate(['movies']);
-      },
-      (error) => {
-        console.error('Login error: ', error);
-        this.snackBar.open('Login failed: ' + error.message, 'OK', {
-          duration: 2000,
-        });
-      }
-    );
+          });
+        }
+      );
   }
 }

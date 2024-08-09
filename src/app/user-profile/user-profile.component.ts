@@ -45,7 +45,7 @@ import { NgFor } from '@angular/common';
 })
 export class UserProfileComponent implements OnInit {
   user: any = {};
-  favoriteMovies: any[] = [];
+  FavoriteMovies: any[] = [];
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -60,7 +60,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateUser(): void {
-    this.fetchApiData.editUser(this.user.username, this.user).subscribe(
+    this.fetchApiData.editUser(this.user).subscribe(
       (res: any) => {
         this.user = {
           ...res,
@@ -68,8 +68,8 @@ export class UserProfileComponent implements OnInit {
           password: this.user.password,
           token: this.user.token,
         };
-        localStorage.setItem('user', JSON.stringify(this.user));
-        this.getfavoriteMovies();
+        localStorage.setItem('users', JSON.stringify(this.user));
+        this.getFavoriteMovies();
       },
       (err: any) => {
         console.error(err);
@@ -85,11 +85,11 @@ export class UserProfileComponent implements OnInit {
     this.router.navigate(['movies']);
   }
 
-  getfavoriteMovies(): void {
+  getFavoriteMovies(): void {
     this.fetchApiData.getAllMovies().subscribe(
       (res: any) => {
-        this.favoriteMovies = res.filter((movie: any) => {
-          return this.user.favoriteMovies.includes(movie._id);
+        this.FavoriteMovies = res.filter((movie: any) => {
+          return this.user.FavoriteMovies.includes(movie._id);
         });
       },
       (err: any) => {
@@ -99,23 +99,39 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUser(): void {
-    this.fetchApiData.getUser(this.user.id).subscribe((res: any) => {
-      this.user = {
-        ...res,
-        id: res._id,
-        password: this.user.password,
-        token: this.user.token,
-      };
-      localStorage.setItem('user', JSON.stringify(this.user));
-      this.getfavoriteMovies();
-    });
-  }
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!this.user || !this.user.Username) {
+      console.error('Username is undefined or invalid');
+      return;
+    }
 
-  removeFromFavorite(movie: any): void {
-    this.fetchApiData.deleteFavoriteMovie(this.user.id, movie.title).subscribe(
+    console.log(`Fetching user profile for: ${this.user.Username}`);
+    this.fetchApiData.getUser(this.user.Username).subscribe(
       (res: any) => {
-        this.user.favoriteMovies = res.favoriteMovies;
-        this.getfavoriteMovies();
+        this.user = {
+          ...res,
+          id: res._id,
+          password: this.user.password,
+          token: this.user.token,
+        };
+        localStorage.setItem('user', JSON.stringify(this.user));
+        this.getFavoriteMovies();
+      },
+      (err: any) => {
+        console.error(err);
+      }
+    );
+  }
+  removeFromFavorite(movie: any): void {
+    const username = this.user.Username; // Ensure you're using the correct username property
+    this.fetchApiData.deleteFavoriteMovie(username, movie._id).subscribe(
+      (res: any) => {
+        console.log(`${movie.Title} removed from favorites`);
+        this.user.FavoriteMovies = this.user.FavoriteMovies.filter(
+          (id: string) => id !== movie._id
+        );
+        localStorage.setItem('user', JSON.stringify(this.user));
+        this.getFavoriteMovies(); // Refresh the list of favorite movies
       },
       (err: any) => {
         console.error(err);

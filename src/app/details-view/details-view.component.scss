@@ -1,0 +1,55 @@
+// Styling for the genre section
+.genre-section {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.genre-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #3f51b5; // Material Design Indigo color
+}
+
+.genre-description {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+// Styling for the directors section
+.director-section {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.director-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f57c00; // Material Design Orange color
+}
+
+.director-bio,
+.director-birth {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #666;
+}
+
+mat-dialog-actions {
+  padding: 0.5rem;
+  text-align: right;
+}
+
+mat-button {
+  background-color: #3f51b5;
+  color: white;
+  &:hover {
+    background-color: #303f9f;
+  }
+}

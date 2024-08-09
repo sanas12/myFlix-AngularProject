@@ -51,7 +51,7 @@ export class MovieCardComponent implements OnInit {
 
         let user = JSON.parse(localStorage.getItem('user') || '');
         this.movies.forEach((movie: any) => {
-          movie.isFavorite = user.favoriteMovies.includes(movie._id);
+          movie.isFavorite = user.FavoriteMovies.includes(movie._id);
         });
         return this.movies;
       },
@@ -100,8 +100,8 @@ export class MovieCardComponent implements OnInit {
   modifyFavoriteMovies(movie: any): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const username = user.Username; // Ensure correct username retrieval
-    if (!user.favoriteMovies) {
-      user.favoriteMovies = [];
+    if (!user.FavoriteMovies) {
+      user.FavoriteMovies = [];
     }
 
     if (this.isFavorite(movie)) {
@@ -110,7 +110,7 @@ export class MovieCardComponent implements OnInit {
         .subscribe(() => {
           console.log(`${movie.Title} removed from favorites`);
           // Update local storage after removing from favorites
-          user.favoriteMovies = user.favoriteMovies.filter(
+          user.FavoriteMovies = user.FavoriteMovies.filter(
             (id: string) => id !== movie._id
           );
           localStorage.setItem('user', JSON.stringify(user));
@@ -120,7 +120,7 @@ export class MovieCardComponent implements OnInit {
       this.fetchApiData.addFavoriteMovie(username, movie._id).subscribe(() => {
         console.log(`${movie.Title} added to favorites`);
         // Update local storage after adding to favorites
-        user.favoriteMovies.push(movie._id);
+        user.FavoriteMovies.push(movie._id);
         localStorage.setItem('user', JSON.stringify(user));
         this.getMovies(); // Refresh movies
       });
@@ -131,8 +131,8 @@ export class MovieCardComponent implements OnInit {
   isFavorite(movie: any): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return (
-      Array.isArray(user.favoriteMovies) &&
-      user.favoriteMovies.includes(movie._id)
+      Array.isArray(user.FavoriteMovies) &&
+      user.FavoriteMovies.includes(movie._id)
     );
   }
 }
