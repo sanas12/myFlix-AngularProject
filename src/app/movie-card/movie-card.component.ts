@@ -9,7 +9,7 @@ import {
   MatCardModule,
   MatCardTitle,
 } from '@angular/material/card';
-import { NgFor } from '@angular/common';
+import { NgClass, NgFor } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { DetailsViewComponent } from '../details-view/details-view.component';
 
@@ -27,10 +27,12 @@ import { DetailsViewComponent } from '../details-view/details-view.component';
     MatCardTitle,
     MatCardContent,
     MatCardActions,
+    NgClass,
   ],
 })
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
+  user: any;
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -96,19 +98,30 @@ export class MovieCardComponent implements OnInit {
 
   // Modify (add/remove) favorite movies
   modifyFavoriteMovies(movie: any): void {
-    const username = localStorage.getItem('username');
-    if (!username) return;
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const username = user.Username; // Ensure correct username retrieval
+    if (!user.favoriteMovies) {
+      user.favoriteMovies = [];
+    }
 
     if (this.isFavorite(movie)) {
       this.fetchApiData
         .deleteFavoriteMovie(username, movie._id)
         .subscribe(() => {
           console.log(`${movie.Title} removed from favorites`);
+          // Update local storage after removing from favorites
+          user.favoriteMovies = user.favoriteMovies.filter(
+            (id: string) => id !== movie._id
+          );
+          localStorage.setItem('user', JSON.stringify(user));
           this.getMovies(); // Refresh movies
         });
     } else {
       this.fetchApiData.addFavoriteMovie(username, movie._id).subscribe(() => {
         console.log(`${movie.Title} added to favorites`);
+        // Update local storage after adding to favorites
+        user.favoriteMovies.push(movie._id);
+        localStorage.setItem('user', JSON.stringify(user));
         this.getMovies(); // Refresh movies
       });
     }
@@ -116,6 +129,10 @@ export class MovieCardComponent implements OnInit {
 
   // Check if a movie is a favorite
   isFavorite(movie: any): boolean {
-    return this.movies.some((favMovie) => favMovie._id === movie._id);
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return (
+      Array.isArray(user.favoriteMovies) &&
+      user.favoriteMovies.includes(movie._id)
+    );
   }
 }

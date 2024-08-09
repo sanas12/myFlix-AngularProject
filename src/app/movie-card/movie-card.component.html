@@ -25,11 +25,11 @@
           Synopsis
         </button>
         <mat-icon
-          fontIcon="{{ movie.isFavorite ? 'favorite' : 'favorite_border' }}"
-          id="{{ movie._id }}-favorite-icon"
+          [ngClass]="movie.isFavorite ? 'favorite' : 'favorite_border'"
           (click)="modifyFavoriteMovies(movie)"
-          >favorite_border</mat-icon
         >
+          {{ movie.isFavorite ? "favorite" : "favorite_border" }}
+        </mat-icon>
       </mat-card-actions>
     </mat-card>
   </div>

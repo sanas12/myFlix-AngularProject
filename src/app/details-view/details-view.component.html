@@ -1,18 +1,13 @@
 <h2 mat-dialog-title>Details</h2>
-<mat-dialog-content>
-  <div *ngIf="data.genres">
-    <h3>Genres:</h3>
-    <ul>
-      <li *ngFor="let genre of data.genres">{{ genre }}</li>
-    </ul>
-  </div>
-  <div *ngIf="data.directors">
-    <h3>Directors:</h3>
-    <ul>
-      <li *ngFor="let director of data.directors">{{ director }}</li>
-    </ul>
-  </div>
-</mat-dialog-content>
+<div *ngIf="data.genres">
+  <h3>Genre:</h3>
+  <mat-card-title>{{ data.genres.name }}</mat-card-title>
+</div>
+<div *ngIf="data.directors">
+  <mat-card-title>{{ data.directors.name }}</mat-card-title>
+</div>
+
+<!-- Add more director details here if necessary -->
 <mat-dialog-actions>
   <button mat-button (click)="dialogRef.close()">Close</button>
 </mat-dialog-actions>
