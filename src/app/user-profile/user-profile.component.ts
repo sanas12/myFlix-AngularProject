@@ -61,23 +61,21 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateUser(): void {
-    this.fetchApiData
-      .editUser(this.user.username, this.user.userDetails)
-      .subscribe(
-        (res: any) => {
-          this.user = {
-            ...res,
-            id: res._id,
-            password: this.user.password,
-            token: this.user.token,
-          };
-          localStorage.setItem('users', JSON.stringify(this.user));
-          this.getFavoriteMovies();
-        },
-        (err: any) => {
-          console.error(err);
-        }
-      );
+    this.fetchApiData.editUser(this.user).subscribe(
+      (res: any) => {
+        this.user = {
+          ...res,
+          id: res._id,
+          password: this.user.password,
+          token: this.user.token,
+        };
+        localStorage.setItem('users', JSON.stringify(this.user));
+        this.getFavoriteMovies();
+      },
+      (err: any) => {
+        console.error(err);
+      }
+    );
   }
 
   resetUser(): void {
