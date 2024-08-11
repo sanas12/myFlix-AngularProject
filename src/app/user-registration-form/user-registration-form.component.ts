@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FetchApiDataService } from '../fetch-api-data.service';
+import { Router } from '@angular/router';
 
 /**
  * UserRegistrationFormComponent provides a form for users to register an account.
@@ -39,7 +40,8 @@ export class UserRegistrationFormComponent {
   constructor(
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public router: Router
   ) {}
 
   /**
@@ -52,15 +54,18 @@ export class UserRegistrationFormComponent {
    */
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe(
-      (result: any) => {
+      (result) => {
         const message = result.message || 'Registration successful!';
         this.dialogRef.close(); // Close the modal on success!
         this.snackBar.open(message, 'OK', {
           duration: 2000,
         });
+        this.router.navigate(['login']);
       },
       (error: any) => {
-        const errorMessage = error.error.message || 'Registration failed!';
+        const errorMessage =
+          (error && error.error && error.error.message) ||
+          'Registration failed!';
         this.snackBar.open(errorMessage, 'OK', {
           duration: 2000,
         });
